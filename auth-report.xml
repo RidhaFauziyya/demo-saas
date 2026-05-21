@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="11" time="102.551" timestamp="2026-05-21T22:00:07.124324+07:00" hostname="Ridhafauziyyar"><testcase classname="tests.login_test" name="test_login_positive" time="13.493" /><testcase classname="tests.login_test" name="test_login_negative[email-parkcyoke--Invalid email]" time="6.903" /><testcase classname="tests.login_test" name="test_login_negative[global-parkcyoke@gmail.com--Password is required]" time="14.779"><failure message="AssertionError: assert 'Invalid email or password' == 'Password is required'&#10;  &#10;  #x1B[0m#x1B[91m- Password is required#x1B[39;49;00m#x1B[90m#x1B[39;49;00m&#10;  #x1B[92m+ Invalid email or password#x1B[39;49;00m#x1B[90m#x1B[39;49;00m">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="4a07b315c1d111dcbc05c71fb502cf03")&gt;, field = 'global'
+email = 'parkcyoke@gmail.com', password = '', expected_error = 'Password is required'
+
+    @pytest.mark.parametrize(
+        "field,email,password,expected_error",
+        [
+            ("email", "parkcyoke", "", "Invalid email"),
+            ("global", "parkcyoke@gmail.com", "", "Password is required"),
+            ("global", "parkcyoke@gmail.com", "testqc", "Invalid email or password"),
+            ("global", "parkcy123@gmail.com", "testqcpass", "Invalid email or password"),
+        ]
+    )
+    def test_login_negative(driver, field, email, password, expected_error):
+        print("Start testing login with negative cases")
+        driver.get("https://demo-saas.bugbug.io/sign-in")
+        #Call class for open login page
+        login_page = LoginPage(driver)
+        login_page.login(email=email, password=password)
+        if field != "global":
+            error_text = login_page.get_error_by_field(field_name=field)
+        else:
+            error_text = login_page.get_message_error()
+    
+        print("Testing data")
+        print(f"Email: {email}")
+        print(f"Password: {password}")
+        print(f"Expected error: {expected_error}")
+        print(f"Actual error: {error_text}")
+    
+&gt;       assert error_text == expected_error
+E       AssertionError: assert 'Invalid email or password' == 'Password is required'
+E         
+E         #x1B[0m#x1B[91m- Password is required#x1B[39;49;00m#x1B[90m#x1B[39;49;00m
+E         #x1B[92m+ Invalid email or password#x1B[39;49;00m#x1B[90m#x1B[39;49;00m
+
+tests\login_test.py:50: AssertionError</failure></testcase><testcase classname="tests.login_test" name="test_login_negative[global-parkcyoke@gmail.com-testqc-Invalid email or password]" time="7.281" /><testcase classname="tests.login_test" name="test_login_negative[global-parkcy123@gmail.com-testqcpass-Invalid email or password]" time="7.453" /><testcase classname="tests.register_test" name="test_register_positive" time="8.083" /><testcase classname="tests.register_test" name="test_register_negative[firstName--test-emailtest@gmail.com-testqcpass-String must contain at least 1 character(s)]" time="6.229" /><testcase classname="tests.register_test" name="test_register_negative[lastName-Kim--emailtest@gmail.com-testqcpass-String must contain at least 1 character(s)]" time="8.143" /><testcase classname="tests.register_test" name="test_register_negative[email-Kim-test-emailtest-testqcpass-Invalid email]" time="10.047" /><testcase classname="tests.register_test" name="test_register_negative[password-Kim-test-emailtest@gmail.com-test-String must contain at least 8 character(s)]" time="8.570" /><testcase classname="tests.register_test" name="test_register_negative[global-Kim-test-test@gmail.com-testqcpass-User already exists]" time="9.317" /></testsuite></testsuites>
