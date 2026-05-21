@@ -1,4 +1,4 @@
-# Auth Automation Testing with Selenium & Pytest
+# Web Authentication Automation Testing using Selenium & Pytest
 Automation testing project using Selenium, Pytest, and Allure Report with Page Object Model implementation.
 
 ## Tech Stack
